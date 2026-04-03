@@ -63,5 +63,21 @@ namespace AirlineWeb.Controllers
 
 
 
+        [HttpPut("{id}")]
+        public ActionResult UpdateFlightDetails(int id, FlightDetailUpdateDto flightDetailUpdateDto)
+        {
+            var flight = _context.FlightDetails
+                                 .FirstOrDefault(s => s.Id == id);
+
+            if (flight == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(flightDetailUpdateDto, flight);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
     }
 }

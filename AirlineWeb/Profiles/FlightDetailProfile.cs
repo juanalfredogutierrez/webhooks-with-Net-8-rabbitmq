@@ -9,6 +9,8 @@ namespace WebhookSubcriptionProfile.WebhookSubcriptionProfile
         public FlightDetailProfile()
         {
             CreateMap<FlightDetailCreateDto, FlightDetail>();
+            CreateMap<FlightDetailUpdateDto, FlightDetail>();
+
             CreateMap<FlightDetail, FlightDetailReadDto>();
 
 
