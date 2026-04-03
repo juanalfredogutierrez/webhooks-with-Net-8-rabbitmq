@@ -30,7 +30,7 @@ namespace AirlineWeb.Controllers
                 return NoContent();
             }
 
-            return Ok(_mapper.Map<FlightDetailReadDto>(flightCode));
+            return Ok(_mapper.Map<FlightDetailReadDto>(flight));
         }
 
         [HttpPost]
