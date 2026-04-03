@@ -1,0 +1,49 @@
+## [Visual Studio / .NET Core]
+bin/
+obj/
+out/
+[Dd]ebug/
+[Rr]elease/
+.vs/
+[Bb]in/
+[Oo]bj/
+*.vsidx
+*.suo
+*.user
+
+## [Capa de Configuración - MUY IMPORTANTE]
+# No subas secretos reales. Usa appsettings.Development.json para pruebas.
+appsettings.json
+appsettings.Development.json
+# Si decides subir la base de appsettings, comenta la línea anterior 
+# pero NUNCA subas 'secrets.json' o archivos con contraseñas reales.
+usersecrets.json
+*.user
+*.userosscache
+*.sln.docstates
+
+## [Visual Studio Code]
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+## [Docker]
+.dockerignore
+# No subir archivos de variables de entorno con credenciales
+.env
+.env.backup
+.env.dev
+.env.local
+
+## [Base de Datos Local]
+*.mdf
+*.ldf
+*.db
+*.sqlite
+
+## [Sistemas Operativos]
+.DS_Store
+Thumbs.db
