@@ -14,7 +14,7 @@ namespace AirlineWeb.Models
 
         [Column(TypeName = "decimal(6,2)")]
         [Required]
-        public string Price { get; set; }
+        public decimal Price { get; set; }
 
     }
 }

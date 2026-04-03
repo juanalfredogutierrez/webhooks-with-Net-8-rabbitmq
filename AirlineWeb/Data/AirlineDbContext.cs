@@ -12,7 +12,7 @@ namespace AirlineWeb.Data
         }
 
         public DbSet<WebhooksSubcriptions> WebhooksSubcriptions {get;set;}
-        public DbSet<FlightDetail> FlightDetail {get;set;}=null;
+        public DbSet<FlightDetail> FlightDetail {get;set;}
 
     }
 }
