@@ -1,23 +1,29 @@
+using AirlineWeb.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("TravelAgentConnection");
+Console.WriteLine($"CONEXION: '{connectionString}'");
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(); // Solo una vez
+
+builder.Services.AddDbContext<AirlineDbContext>(options =>
+       options.UseSqlServer(connectionString));
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseStaticFiles();
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllers();
-
 app.Run();
