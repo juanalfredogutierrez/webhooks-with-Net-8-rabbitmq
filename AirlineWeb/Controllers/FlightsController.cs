@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using AirlineWeb.Data;
+using AirlineWeb.MessageBus;
 using AirlineWeb.DTOs;
 using AirlineWeb.Models;
 using AutoMapper;
@@ -12,11 +13,13 @@ namespace AirlineWeb.Controllers
     {
         private readonly AirlineDbContext _context;
         private readonly IMapper _mapper;
-
-        public FlightsControllercs(AirlineDbContext context, IMapper mapper)
+        private readonly IMessageBusClient _messageBus;
+        public FlightsControllercs(AirlineDbContext context, IMapper mapper, IMessageBusClient messageBus)
         {
             _context = context;
             _mapper = mapper;
+            _messageBus = messageBus;
+
         }
 
         [HttpGet("{flightCode}", Name = "GetFlightDetailsByCode")]
@@ -61,8 +64,6 @@ namespace AirlineWeb.Controllers
 
         }
 
-
-
         [HttpPut("{id}")]
         public ActionResult UpdateFlightDetails(int id, FlightDetailUpdateDto flightDetailUpdateDto)
         {
@@ -73,11 +74,38 @@ namespace AirlineWeb.Controllers
             {
                 return NotFound();
             }
+
+            decimal oldPrice = flight.Price;
+
             _mapper.Map(flightDetailUpdateDto, flight);
-            _context.SaveChanges();
 
-            return NoContent();
+            try
+            {
+                _context.SaveChanges();
+
+                if (oldPrice != flight.Price)
+                {
+                    Console.WriteLine("Price changed - Place message on bus");
+                    var message = new NotificationMessageDto()
+                    {
+                        WebhookType = "priceChange",
+                        FlightCode = flight.FlightCode,
+                        OldPrice = oldPrice,
+                        NewPrice = flight.Price
+                    };
+                    _messageBus.SendMessage(message);
+                }
+                else
+                {
+                    Console.WriteLine("No price change");
+                }
+                return NoContent();
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
     }
 }

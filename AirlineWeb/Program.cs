@@ -1,4 +1,6 @@
 using AirlineWeb.Data;
+using AirlineWeb.MessageBus;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,13 +10,13 @@ Console.WriteLine($"CONEXION: '{connectionString}'");
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // Solo una vez
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AirlineDbContext>(options =>
        options.UseSqlServer(connectionString));
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
+builder.Services.AddSingleton<IMessageBusClient,MessageBusClient>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
