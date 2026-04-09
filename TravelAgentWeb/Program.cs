@@ -1,4 +1,4 @@
-using AirlineWeb.Data;
+using TravelAgentWeb.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); // Solo una vez
 
-builder.Services.AddDbContext<AirlineDbContext>(options =>
+builder.Services.AddDbContext<TravelAgentDbContext>(options =>
        options.UseSqlServer(connectionString));
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -22,8 +22,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseStaticFiles();
+
 app.UseAuthorization();
-app.UseStaticFiles();
 app.MapControllers();
 app.Run();

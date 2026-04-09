@@ -10,6 +10,6 @@ namespace TravelAgentWeb.Data
         {
         
         }
-        public DbSet<WebhookSecret> WebhookSecret {get;set;}
+        public DbSet<WebhookSecret> WebhookSecrets {get;set;}
     }
 }

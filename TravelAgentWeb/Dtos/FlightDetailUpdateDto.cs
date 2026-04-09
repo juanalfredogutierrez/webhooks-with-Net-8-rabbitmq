@@ -2,7 +2,7 @@
 
 namespace TravelAgentWeb.Dtos
 {
-    public class FlightDetailUpdate
+    public class FlightDetailUpdateDto
     {
         public string Publisher { get; set; }
         public string Secret { get; set; }
