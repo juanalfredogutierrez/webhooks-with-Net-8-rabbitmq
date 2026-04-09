@@ -24,7 +24,7 @@ namespace TravelAgentWeb.Controllers
         {
             Console.WriteLine($"webhook Recevied from: {flightDetailUpdateDto.Publisher}");
 
-            var secretModel = _context.WebhookSecrets
+            var secretModel = _context.WebhookSecret
                                 .FirstOrDefault(x => x.Publisher == flightDetailUpdateDto.Publisher &&
                                                 x.Secret == flightDetailUpdateDto.Secret);
             if (secretModel == null)
