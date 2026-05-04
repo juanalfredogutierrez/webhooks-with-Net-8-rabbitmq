@@ -1,34 +1,41 @@
-# Webhooks Processing con .NET 8 y RabbitMQ
+# 🚀 Webhooks Processing con .NET 8, RabbitMQ y Docker
+
+![.NET](https://img.shields.io/badge/.NET-8-blue)
+![RabbitMQ](https://img.shields.io/badge/RabbitMQ-Message%20Broker-orange)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![Architecture](https://img.shields.io/badge/Architecture-Event--Driven-green)
+
+---
 
 ## 📌 Descripción
-Sistema distribuido basado en eventos que permite el procesamiento de webhooks mediante comunicación asíncrona entre servicios utilizando RabbitMQ.
+
+Sistema distribuido basado en eventos que implementa el procesamiento de webhooks utilizando **.NET 8** y **RabbitMQ**.
+
+La solución demuestra cómo construir aplicaciones desacopladas mediante mensajería, permitiendo el procesamiento asíncrono de eventos entre múltiples servicios.
+
+---
 
 ## 🧱 Arquitectura
-El sistema está compuesto por múltiples servicios independientes que se comunican a través de colas:
 
-- Servicio receptor de webhooks
-- Servicio procesador de eventos
-- Servicio consumidor
+### 🔹 High-Level Architecture
+![High-Level Architecture](./docs/high-level.png)
 
-## 🚀 Tecnologías
-- .NET 8
-- RabbitMQ
-- Web API
+### 🔹 Solution Architecture
+![Solution Architecture](./docs/solution-architecture.png)
 
-## ⚙️ Características
-- Procesamiento asíncrono de eventos
-- Desacoplamiento entre servicios
-- Escalabilidad mediante colas
-- Manejo de eventos tipo webhook
+---
 
-## ▶️ Cómo ejecutar
-1. Levantar RabbitMQ
-2. Ejecutar los proyectos por separado
-3. Enviar webhook al endpoint
-4. Ver procesamiento en cola
+## ⚙️ Flujo del sistema
 
-## 💡 Objetivo
-Demostrar arquitectura basada en eventos y comunicación entre servicios utilizando mensajería.
+```mermaid
+sequenceDiagram
+    participant Client
+    participant WebhooksAPI
+    participant RabbitMQ
+    participant SendAgent
+    participant ExternalSystem
 
-## 👨‍💻 Autor
-Juan Gutierrez
+    Client->>WebhooksAPI: Registrar webhook
+    WebhooksAPI->>RabbitMQ: Publicar evento
+    RabbitMQ->>SendAgent: Consumir mensaje
+    SendAgent->>ExternalSystem: HTTP POST webhook
